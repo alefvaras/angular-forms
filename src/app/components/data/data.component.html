@@ -1,0 +1,81 @@
+<h4>Data</h4>
+<hr>
+
+<form [formGroup]="form" (ngSubmit)="saveChanges()">
+
+  <div class="form-group">
+    <label for="nombre">Nombre</label>
+    <input type="text" class="form-control" id="nombre" placeholder="Escriba su nombre" name="nombre"
+           formControlName="nombre"
+           [ngClass]="{'is-invalid':!form.get('nombre').valid && !form.controls['nombre'].untouched}">
+  </div>
+  <div *ngIf="form.controls['nombre']?.errors?.required && !form.controls['nombre'].untouched">
+    Este campo es requerido
+  </div>
+  <div *ngIf="form.get('nombre').errors?.minlength ">
+    Este campo requiere minimo {{form.get('nombre').errors.minlength.requiredLength}} caracteres
+  </div>
+  <div class="form-group">
+    <label for="apellido">Apellido</label>
+    <input type="text" class="form-control" id="apellido" placeholder="Escriba su apellido" name="apellido"
+           formControlName="apellido"
+           [ngClass]="{'is-invalid':!form.get('apellido').valid && !form.controls['apellido'].untouched}">
+  </div>
+  <div c *ngIf="form.controls['apellido']?.errors?.required && !form.controls['apellido'].untouched">
+    Este campo es requerido
+  </div>
+  <div class="form-group">
+    <label for="email">Email </label>
+    <input type="email" class="form-control" id="email" placeholder="Escriba su email" name="email"
+           formControlName="email"
+           [ngClass]="{'is-invalid':!form.get('email').valid && !form.controls['email'].untouched}">
+  </div>
+
+  <div *ngIf="form.controls['email']?.errors?.pattern && !form.controls['email'].untouched">
+    Este campo no tiene formato correcto
+  </div>
+  <div *ngIf="form.controls['email']?.errors?.required && !form.controls['email'].untouched">
+    Este campo es requerido
+  </div>
+  <div class="form-group">
+    <label for="password1">Password </label>
+    <input type="password" class="form-control" id="password1" placeholder="Escriba su Password" name="password1"
+           formControlName="password1"
+           [ngClass]="{'is-invalid':!form.get('password1').valid && !form.controls['password1'].untouched}">
+  </div>
+
+  <div class="form-group">
+    <label for="password2">Repetir contraseña </label>
+    <input type="password" class="form-control" id="password2" placeholder="Repita su Password" name="password2"
+           formControlName="password2"
+           [ngClass]="{'is-invalid':!form.get('password2').valid && !form.controls['password2'].untouched}">
+  </div>
+  <div *ngIf="form.controls.password2?.errors?.validatonPassword && !form.controls?.password2?.pristine">
+    Las contraseñas no son identicas
+  </div>
+  <div class="form-group">
+    <label for="username">Username </label>
+    <input type="text" class="form-control" id="username" placeholder="Escriba su username" name="username"
+           formControlName="username"
+           [ngClass]="{'is-invalid':!form.get('username').valid && !form.controls['username'].untouched}">
+  </div>
+  <div *ngIf="form.controls.username?.errors?.userExists && !form.controls?.username?.pristine">
+    Usuario ozymern esta tomado
+  </div>
+  <div class="form-group">
+    <label for="email">Psatiempos </label>
+    <div formArrayName="pasaTiempos">
+      <!-- primer item del arreglo -->
+      <input type="text" class="form-control"
+             *ngFor="let pasaTiempo of form.controls['pasaTiempos'].controls; let i = index;"
+             [formControlName]="i">
+    </div>
+    <br>
+    <button (click)="addPasatiempos()" type="button" class="btn btn-primary">Nuevo</button>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{{form.valid}}
+{{form.status}}

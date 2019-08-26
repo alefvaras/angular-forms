@@ -1,0 +1,107 @@
+<h4>Template</h4>
+<hr>
+
+<!-- novalidate quito validacion de html5 -->
+<!-- #form="ngForm" capturo todos los valores del formulario -->
+<form novalidate (ngSubmit)="save(form)" #form="ngForm">
+    <div class="form-group ">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control " [ngClass]="{'is-invalid': (nombre.errors?.minlength || nombre.errors?.required) && nombre.touched}" id="nombre" placeholder="Escriba su nombre" required  minlength="4" name="nombre" ngModel
+        #nombre="ngModel"
+        > 
+        <div class="invalid-feedback" *ngIf="nombre.errors?.required" >
+            Este campo es requerido
+        </div>
+        <div  class="invalid-feedback" *ngIf="nombre.errors?.minlength" >
+            Este campo requiere minimo {{nombre.errors.minlength.requiredLength}} caracteres
+        </div>
+      </div>
+    <div class="form-group">
+      <label for="apellido">Apellido</label>
+      <input type="text" class="form-control" [ngClass]="{'is-invalid': apellido.errors?.required && apellido.touched}" id="apellido" placeholder="Escriba su apellido" required  minlength="4" name="apellido" ngModel
+      #apellido="ngModel">
+    </div>
+    <div class="invalid-feedback"  *ngIf="apellido.errors?.required">
+        Este campo es requerido
+    </div>
+    <div class="form-group">
+        <label for="email">Email </label>
+        <input type="email" class="form-control" [ngClass]="{'is-invalid':(email.errors?.pattern || email.errors?.required) && email.touched}" id="email"  placeholder="Escriba su email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  minlength="4" name="email" ngModel
+        #email="ngModel">
+      </div>
+      <div class="invalid-feedback"  *ngIf="email.errors?.required">
+        Este campo es requerido
+    </div>
+    <div class="invalid-feedback"  *ngIf="email.errors?.pattern">
+        Este campo no tiene formato correcto
+    </div>
+    <button type="submit"  [disabled] ="!form.valid"class="btn btn-primary">Submit</button>
+  </form>
+
+<hr>
+
+<form novalidate (ngSubmit)="save2(form2)" #form2="ngForm">
+    <div class="form-group">
+        <label for="nombre2">Nombre</label>
+        <input type="text" class="form-control" [ngClass]="{'is-invalid': (nombre2.errors?.minlength || nombre2.errors?.required) && nombre2.touched}" id="nombre2" placeholder="Escriba su nombre" required  minlength="4" name="nombre2" [(ngModel)]="usr.nombre"
+        #nombre2="ngModel"> 
+        <div class="invalid-feedback" *ngIf="nombre2.errors?.required">
+            Este campo es requerido
+        </div>
+        <div class="invalid-feedback"  *ngIf="nombre2.errors?.minlength" >
+            Este campo requiere minimo {{nombre2.errors.minlength.requiredLength}} caracteres
+        </div>
+      </div>
+    <div class="form-group">
+      <label for="apellido2">Apellido</label>
+      <input type="text" class="form-control"  [ngClass]="{'is-invalid': apellido2.errors?.required && apellido2.touched}" id="apellido2" placeholder="Escriba su apellido" required  minlength="4" name="apellido2" [(ngModel)]="usr.apellido"
+      #apellido2="ngModel"> 
+    </div>
+    <div class="invalid-feedback" *ngIf="apellido2.errors?.required">
+        Este campo es requerido
+    </div>
+    <div class="form-group">
+        <label for="email2">Email </label>
+        <input type="email" class="form-control"  [ngClass]="{'is-invalid':(email2.errors?.pattern || email2.errors?.required) && email2.touched}"  id="email2"  placeholder="Escriba su email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  minlength="4" name="email2"  [(ngModel)]="usr.email"
+        #email2="ngModel"
+        >
+      </div>
+      <div class="invalid-feedback"  *ngIf="email2.errors?.required">
+        Este campo es requerido
+    </div>
+    <div class="invalid-feedback"  *ngIf="email2.errors?.pattern">
+        Este campo no tiene formato correcto
+    </div>
+
+<div class="form-group">
+  <label for="pais">Pais</label>
+  <select class="form-control" name="pais" id="" [(ngModel)]="usr.pais">
+    <option value="">Seleccione un pais</option>
+    <option *ngFor="let pais of paises" [value]="pais.codigo">{{pais.nombre}}</option>
+   
+  </select>
+</div>
+<div class="form-group">
+  <label for="sexo">Sexo</label>
+
+<div class="custom-control custom-radio" *ngFor="let sex of sexos">
+  <input  [(ngModel)]="usr.sexo" type="radio"  id="radio-{{sex}}" name="sexo" class="custom-control-input"  value="{{sex}}">
+  <label class="custom-control-label" for="radio-{{sex}}" >{{sex}}</label>
+</div>
+</div>
+
+<div class="custom-control custom-checkbox">
+  <input type="checkbox" class="custom-control-input" id="customCheckDisabled" name="acepta" [(ngModel)]="usr.acepta" required>
+  <label class="custom-control-label" for="customCheckDisabled">Aceptar las condiciones</label>
+</div>
+
+ <br>
+    <button type="submit" 
+    [disabled] ="!form2.valid"
+    class="btn btn-primary">Submit</button>
+  </form>
+
+
+  <pre>
+      {{usr | json}}
+  </pre>
